@@ -4,6 +4,7 @@
     <color name="green">#FF00FF00</color>
     <color name="blue" >#FF0000FF</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gruvbox_background">#282828</color>
     <color name="gruvbox_black">#3c3836</color>
     <color name="gruvbox_red">#cc241d</color>
     <color name="gruvbox_green">#98971a</color>
@@ -12,6 +13,7 @@
     <color name="gruvbox_magenta">#b16286</color>
     <color name="gruvbox_cyan">#689d6a</color>
     <color name="gruvbox_white">#a89984</color>
+    <color name="gruvbox_black_light">#928374</color>
 	<color name="gruvbox_red_light">#cc241d</color>
 	<color name="gruvbox_green_light">#98971a</color>
 	<color name="gruvbox_yellow_light">#d79921</color>

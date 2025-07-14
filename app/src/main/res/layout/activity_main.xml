@@ -6,6 +6,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gruvbox_background"
     tools:context=".view.activity.MainActivity">
 
     <FrameLayout

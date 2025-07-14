@@ -3,8 +3,10 @@ package com.lacaba.tododroid.view.component;
 import com.lacaba.tododroid.R;
 
 import com.lacaba.tododroid.model.Workspace;
+import com.lacaba.tododroid.view.activity.ToDoListActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -44,12 +46,6 @@ public class WorkspaceItem extends ConstraintLayout {
         set.connect(nameLabel.getId(), ConstraintSet.BOTTOM, this.getId(), ConstraintSet.BOTTOM);
         set.applyTo(this);
 
-        setListeners();
     }
 
-    private void setListeners(){
-        setOnClickListener(view -> {
-        });
-    }
-    
 }

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.model.Workspace;
+import com.lacaba.tododroid.view.activity.ToDoListActivity;
 import com.lacaba.tododroid.view.component.WorkspaceItem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -43,7 +45,13 @@ public class DashboardFragment extends Fragment {
             Workspace ws = new Workspace.Builder()
                 .name(new StringBuilder().append("workspace ").append(i).toString())
                 .build();
-            workspaceItems.add(new WorkspaceItem(requireContext(), ws));
+            WorkspaceItem wsItem = new WorkspaceItem(requireContext(), ws);
+            wsItem.setOnClickListener(viewx -> {
+                Intent intent = new Intent(getContext(), ToDoListActivity.class);
+                intent.putExtra("ws_name", ws.getName());
+                getActivity().startActivity(intent);
+            });
+            workspaceItems.add(wsItem);
             panel.addView(workspaceItems.get(i));
         }
 
