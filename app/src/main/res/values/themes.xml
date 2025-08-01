@@ -3,7 +3,7 @@
     <style name="Base.Theme.ToDoDroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
     <item name="colorPrimary">@color/gruvbox_black</item>
-    <item name="colorControlHighlight">@color/gruvbox_green_light</item>
+    <item name="colorControlHighlight">@color/gruvbox_blue_light</item>
     </style>
 
     <style name="App.TodoDroid.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

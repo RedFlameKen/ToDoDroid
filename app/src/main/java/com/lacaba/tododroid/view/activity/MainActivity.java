@@ -1,12 +1,18 @@
 package com.lacaba.tododroid.view.activity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.lacaba.tododroid.R;
+import com.lacaba.tododroid.controller.DashboardController;
+import com.lacaba.tododroid.controller.auth.UserController;
 import com.lacaba.tododroid.controller.todo.ToDoListController;
+import com.lacaba.tododroid.model.ResourceRepository;
+import com.lacaba.tododroid.util.Logger;
 import com.lacaba.tododroid.view.dialog.CreateToDoListDialog;
 import com.lacaba.tododroid.view.fragment.DashboardFragment;
 import com.lacaba.tododroid.view.fragment.ProfileFragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -19,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
 
     private ToDoListController todolistController;
+    private DashboardController dashboardController;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -28,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         todolistController = new ToDoListController();
 
         initComponents();
+
     }
 
     private void initComponents() {
@@ -36,12 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         fragMan = getSupportFragmentManager();
 
-        dashboardFrag = new DashboardFragment();
-        profileFrag = new ProfileFragment();
+        String userId = ResourceRepository.getInstance().getCurUser().getId();
+        todolistController.getToDoLists(userId, todolists -> {
+            dashboardController = new DashboardController(todolists);
+            dashboardFrag = new DashboardFragment(dashboardController);
+            profileFrag = new ProfileFragment(new UserController(this));
 
-        showDashboard();
+            showDashboard();
 
-        addListeners();
+            addListeners();
+        });
+
     }
 
     private void showDashboard(){
@@ -69,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if(item.getItemId() == R.id.main_action_create){
                 CreateToDoListDialog dialog = new CreateToDoListDialog();
-                dialog.setOnToDoListCreateListener(name -> todolistController.createToDoList(name));
+                dialog.setOnToDoListCreateListener(name -> dashboardController.addToDoList(name));
                 dialog.show(getSupportFragmentManager(), CreateToDoListDialog.TAG);
                 return false;
             }

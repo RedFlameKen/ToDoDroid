@@ -126,6 +126,7 @@ public class ToDoListViewController {
 
     public void updateToDoNoNotify(ToDo todo){
         todolistController.updateToDo(todo);
+        syncToDoListOrder(todo.getBoardType());
     }
 
 
@@ -207,6 +208,12 @@ public class ToDoListViewController {
     private void syncToDoListOrder(BoardType type){
         setToDoListIdsArray(type, generateToDoIdOrderArray(getBoardArray(type)));
         todolistController.updateToDoList(todolist);
+    }
+
+    public void syncAllToDoLists(){
+        syncToDoListOrder(BoardType.TODO);
+        syncToDoListOrder(BoardType.DOING);
+        syncToDoListOrder(BoardType.DONE);
     }
 
     private ArrayList<String> generateToDoIdOrderArray(ArrayList<ToDo> todos){

@@ -1,9 +1,7 @@
 package com.lacaba.tododroid.view.fragment;
 
-
 import com.lacaba.tododroid.R;
-import com.lacaba.tododroid.controller.todo.ToDoListController;
-import com.lacaba.tododroid.model.ResourceRepository;
+import com.lacaba.tododroid.controller.DashboardController;
 import com.lacaba.tododroid.view.adapter.ToDoListAdapter;
 
 import android.os.Bundle;
@@ -20,23 +18,17 @@ public class DashboardFragment extends Fragment {
     private RecyclerView recycler;
     private SwipeRefreshLayout refresher;
 
-    private ToDoListController todolistController;
+    private DashboardController dashboardController;
 
-    public DashboardFragment(){
+    public DashboardFragment(DashboardController dashboardController){
         super(R.layout.fragment_dashboard);
-        todolistController = new ToDoListController();
+        this.dashboardController = dashboardController;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         if(panel != null){
-
             if(panel.getChildCount() > 0){
                 while(panel.getChildCount() > 0){
                     panel.removeView(panel.getChildAt(0));
@@ -44,24 +36,24 @@ public class DashboardFragment extends Fragment {
             }
         }
 
-        // panel = getActivity().findViewById(R.id.dashboard_content_panel);
         recycler = view.findViewById(R.id.dashboard_recyclerview);
         refresher = view.findViewById(R.id.dashboard_refresh);
 
         refresher.setOnRefreshListener(() -> {
-            refresher.setRefreshing(false);
+            dashboardController.reloadToDoLists(() -> refresher.setRefreshing(false));
         });
 
-        loadToDoLists();
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        ToDoListAdapter adapter = new ToDoListAdapter(dashboardController, getParentFragmentManager());
+
+        dashboardController.setTodolistAdapter(adapter);
+        recycler.setAdapter(adapter);
     }
 
-    private void loadToDoLists(){
-        String userId = ResourceRepository.getInstance().getCurUser().getId();
-        todolistController.getToDoLists(userId, todolists -> {
-            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-            ToDoListAdapter adapter = new ToDoListAdapter(todolists);
-            recycler.setAdapter(adapter);
-        });
+    @Override
+    public void onResume(){
+        super.onResume();
+        dashboardController.reloadToDoLists(null);
     }
 
 }

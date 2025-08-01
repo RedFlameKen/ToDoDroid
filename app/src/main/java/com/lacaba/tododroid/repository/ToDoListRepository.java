@@ -1,8 +1,11 @@
 package com.lacaba.tododroid.repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query.Direction;
 import com.lacaba.tododroid.controller.db.event.OnWriteFailedListener;
 import com.lacaba.tododroid.controller.db.event.OnWriteSuccessListener;
 import com.lacaba.tododroid.model.todo.BoardType;
@@ -20,8 +23,9 @@ public class ToDoListRepository {
     }
 
     public void writeToDoList(ToDoList todolist, OnWriteSuccessListener onSuccess, OnWriteFailedListener onFailed){
-        fstore.collection(COLLECTION_NAME)
-            .document()
+        DocumentReference docref = fstore.collection(COLLECTION_NAME).document();
+        todolist.setId(docref.getId());
+        docref
             .set(todolist)
             .addOnSuccessListener(v -> {
                 if(onSuccess != null)
@@ -85,7 +89,15 @@ public class ToDoListRepository {
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener(docsnap -> {
-                onResult.accept(new ArrayList<>(docsnap.toObjects(ToDoList.class)));
+                ArrayList<ToDoList> todolists = new ArrayList<>(docsnap.toObjects(ToDoList.class));
+                Collections.sort(todolists, (t1, t2) -> {
+                    if(t1.getUpdateDate().before(t2.getUpdateDate()))
+                        return 1;
+                    if(t1.getUpdateDate().after(t2.getUpdateDate()))
+                        return -1;
+                    return 0;
+                });
+                onResult.accept(todolists);
             });
     }
     

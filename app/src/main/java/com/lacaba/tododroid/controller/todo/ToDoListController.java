@@ -25,7 +25,7 @@ public class ToDoListController {
         todolistRepository.getToDoListsByUID(userId, onResult);
     }
 
-    public void createToDoList(String name){
+    public ToDoList createToDoList(String name){
         String userId = ResourceRepository.getInstance().getCurUser().getId();
         ToDoList todolist = new ToDoList.Builder()
             .name(name)
@@ -33,7 +33,12 @@ public class ToDoListController {
             .todo(new ArrayList<String>())
             .doing(new ArrayList<String>())
             .done(new ArrayList<String>())
+            .updateDate(new Date())
             .build();
+        return todolist;
+    }
+
+    public void writeToDoListToDb(ToDoList todolist){
         todolistRepository.writeToDoList(todolist, null, null);
     }
 
@@ -64,6 +69,23 @@ public class ToDoListController {
 
     public void deleteToDoFromDb(ToDo todo){
         todoRepository.deleteToDoById(todo.getId(), null, null);
+    }
+
+    public void deleteToDoById(String todoId){
+        todoRepository.deleteToDoById(todoId, null, null);
+    }
+
+    public void deleteToDoList(ToDoList todolist){
+        todolistRepository.deleteToDoListById(todolist.getId(), null, null);
+        for (String todoId : todolist.getTodo()) {
+            deleteToDoById(todoId);
+        }
+        for (String todoId : todolist.getDoing()) {
+            deleteToDoById(todoId);
+        }
+        for (String todoId : todolist.getDone()) {
+            deleteToDoById(todoId);
+        }
     }
     
 }

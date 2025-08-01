@@ -42,7 +42,7 @@ public class CreateToDoListDialog extends DialogFragment {
     @Override
     public void onStart(){
         super.onStart();
-        // getDialog().getWindow()
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     private void setListeners(){

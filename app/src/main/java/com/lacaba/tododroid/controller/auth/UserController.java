@@ -9,8 +9,10 @@ import com.lacaba.tododroid.model.ResourceRepository;
 import com.lacaba.tododroid.model.user.User;
 import com.lacaba.tododroid.repository.UserRepository;
 import com.lacaba.tododroid.util.Consumer;
+import com.lacaba.tododroid.view.activity.LoginActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 
 public class UserController {
 
@@ -94,6 +96,9 @@ public class UserController {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null){
             mAuth.signOut();
+            Intent intent = new Intent(activity, LoginActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
         }
     }
 
