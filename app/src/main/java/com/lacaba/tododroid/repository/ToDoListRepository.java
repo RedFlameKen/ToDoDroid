@@ -5,7 +5,6 @@ import java.util.Collections;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query.Direction;
 import com.lacaba.tododroid.controller.db.event.OnWriteFailedListener;
 import com.lacaba.tododroid.controller.db.event.OnWriteSuccessListener;
 import com.lacaba.tododroid.model.todo.BoardType;

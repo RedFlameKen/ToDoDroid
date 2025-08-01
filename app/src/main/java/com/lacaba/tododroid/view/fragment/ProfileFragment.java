@@ -3,8 +3,10 @@ package com.lacaba.tododroid.view.fragment;
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.auth.UserController;
 import com.lacaba.tododroid.model.ResourceRepository;
+import com.lacaba.tododroid.view.activity.ContactSupportActivity;
 import com.lacaba.tododroid.view.component.RowButton;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -36,6 +38,8 @@ public class ProfileFragment extends Fragment {
         buttonPanel = view.findViewById(R.id.profile_buttons_panel);
 
         usernameLabel.setText(resourceRepository.getCurUser().getUsername());
+
+        initSupportButton();
         initLogoutButton();
     }
 
@@ -47,7 +51,17 @@ public class ProfileFragment extends Fragment {
         });
 
         buttonPanel.addView(logoutButton);
-        
+    }
+
+    private void initSupportButton(){
+        RowButton supportButton = RowButton.inflate(getLayoutInflater(), R.drawable.support, "Contact Support");
+
+        supportButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), ContactSupportActivity.class);
+            startActivity(intent);
+        });
+
+        buttonPanel.addView(supportButton);
     }
     
 }

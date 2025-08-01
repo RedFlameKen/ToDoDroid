@@ -2,7 +2,6 @@ package com.lacaba.tododroid.view.dialog;
 
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.DashboardController;
-import com.lacaba.tododroid.controller.todo.ToDoListController;
 import com.lacaba.tododroid.model.todo.ToDoList;
 
 import android.os.Bundle;

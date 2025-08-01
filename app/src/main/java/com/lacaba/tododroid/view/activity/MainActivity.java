@@ -1,18 +1,15 @@
 package com.lacaba.tododroid.view.activity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.DashboardController;
 import com.lacaba.tododroid.controller.auth.UserController;
 import com.lacaba.tododroid.controller.todo.ToDoListController;
 import com.lacaba.tododroid.model.ResourceRepository;
-import com.lacaba.tododroid.util.Logger;
 import com.lacaba.tododroid.view.dialog.CreateToDoListDialog;
 import com.lacaba.tododroid.view.fragment.DashboardFragment;
 import com.lacaba.tododroid.view.fragment.ProfileFragment;
 
-import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;

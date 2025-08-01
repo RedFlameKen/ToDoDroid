@@ -7,12 +7,13 @@ import com.lacaba.tododroid.model.todo.ToDo;
 import com.lacaba.tododroid.view.component.RowButton;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -160,6 +161,26 @@ public class ExpandToDoDialog extends DialogFragment {
             if(curTitle.isBlank() || curTitle.equals(prevTitle)){
                 setSaveButtonEnabled(false);
                 return;
+            }
+        });
+        titleField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s){
+                if(s.toString().isBlank())
+                    if(saveButton.isEnabled()){
+                        setSaveButtonEnabled(false);
+                        return;
+                    }
+                if(!saveButton.isEnabled()){
+                    setSaveButtonEnabled(true);
+                    return;
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count){
             }
         });
         descField.setOnFocusChangeListener((view, isFocused) -> {
