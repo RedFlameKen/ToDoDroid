@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gruvbox_background"
-    tools:context=".view.activity.TodolistActivity">
+    tools:context=".view.activity.ToDoListActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <Toolbar
         android:id="@+id/todolist_top_bar"
         android:layout_width="match_parent"
         android:background="@color/gruvbox_black"
@@ -23,32 +23,52 @@
             android:layout_height="wrap_content"
             android:text="ToDoList"
             android:textSize="14pt"
-            android:textColor="@color/gruvbox_white_light"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_gravity="start"
+            android:textColor="@color/gruvbox_white_light"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </Toolbar>
 
-    <HorizontalScrollView
-        android:id="@+id/todolist_content_scroll"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/todolist_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gruvbox_black"
+        android:orientation="horizontal"
+        app:tabTextColor="@color/gruvbox_white_light"
+        app:tabIndicatorColor="@color/gruvbox_green_light"
+        app:tabIndicatorFullWidth="true"
+        app:layout_constraintTop_toBottomOf="@id/todolist_top_bar"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ToDo"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doing"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/todolist_content_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/todolist_top_bar">
-
-        <LinearLayout
-            android:id="@+id/todolist_content_panel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
-
+        app:layout_constraintTop_toBottomOf="@id/todolist_tabs"/>
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

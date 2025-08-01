@@ -8,17 +8,18 @@
     <color name="gruvbox_black">#3c3836</color>
     <color name="gruvbox_red">#cc241d</color>
     <color name="gruvbox_green">#98971a</color>
+    <color name="gruvbox_green_grayed">#99988B</color>
     <color name="gruvbox_yellow">#d79921</color>
     <color name="gruvbox_blue">#458588</color>
     <color name="gruvbox_magenta">#b16286</color>
     <color name="gruvbox_cyan">#689d6a</color>
     <color name="gruvbox_white">#a89984</color>
     <color name="gruvbox_black_light">#928374</color>
-	<color name="gruvbox_red_light">#cc241d</color>
-	<color name="gruvbox_green_light">#98971a</color>
-	<color name="gruvbox_yellow_light">#d79921</color>
-	<color name="gruvbox_blue_light">#458588</color>
-	<color name="gruvbox_magenta_light">#b16286</color>
-	<color name="gruvbox_cyan_light">#689d6a</color>
-	<color name="gruvbox_white_light">#a89984</color>
+	<color name="gruvbox_red_light">#fb4934</color>
+	<color name="gruvbox_green_light">#b8bb26</color>
+	<color name="gruvbox_yellow_light">#fabd2f</color>
+	<color name="gruvbox_blue_light">#83a598</color>
+	<color name="gruvbox_magenta_light">#d3869b</color>
+	<color name="gruvbox_cyan_light">#8ec07c</color>
+	<color name="gruvbox_white_light">#fbf1c7</color>
 </resources>

@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+>
+<item android:tintMode="screen" android:state_checked="true"/>
+<item android:tintMode="src_over" android:state_checked="false"/>
+</selector>

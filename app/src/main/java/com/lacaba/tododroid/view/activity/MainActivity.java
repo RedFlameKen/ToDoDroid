@@ -1,12 +1,13 @@
 package com.lacaba.tododroid.view.activity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lacaba.tododroid.R;
-
+import com.lacaba.tododroid.controller.todo.ToDoListController;
+import com.lacaba.tododroid.view.dialog.CreateToDoListDialog;
 import com.lacaba.tododroid.view.fragment.DashboardFragment;
 import com.lacaba.tododroid.view.fragment.ProfileFragment;
 
 import android.os.Bundle;
-import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -15,21 +16,23 @@ public class MainActivity extends AppCompatActivity {
     private DashboardFragment dashboardFrag;
     private ProfileFragment profileFrag;
     private FragmentManager fragMan;
+    private BottomNavigationView bottomNav;
 
-    private Button dashboardButton;
-    private Button profileButton;
+    private ToDoListController todolistController;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        todolistController = new ToDoListController();
+
         initComponents();
     }
 
     private void initComponents() {
 
-        dashboardButton = findViewById(R.id.main_dashboard_bottom_button);
-        profileButton = findViewById(R.id.main_profile_bottom_button);
+        bottomNav = findViewById(R.id.main_bottom_bar);
 
         fragMan = getSupportFragmentManager();
 
@@ -39,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         showDashboard();
 
         addListeners();
-
     }
 
     private void showDashboard(){
@@ -60,13 +62,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addListeners(){
-        dashboardButton.setOnClickListener(view -> {
-            if(fragMan.getBackStackEntryCount() > 0)
+        bottomNav.setOnItemSelectedListener(item -> {
+            if(item.getItemId() == R.id.main_action_home){
                 showDashboard();
-        });
-        profileButton.setOnClickListener(view -> {
-            if(fragMan.getBackStackEntryCount() == 0)
+                return true;
+            }
+            if(item.getItemId() == R.id.main_action_create){
+                CreateToDoListDialog dialog = new CreateToDoListDialog();
+                dialog.setOnToDoListCreateListener(name -> todolistController.createToDoList(name));
+                dialog.show(getSupportFragmentManager(), CreateToDoListDialog.TAG);
+                return false;
+            }
+            if(item.getItemId() == R.id.main_action_profile){
                 showProfile();
+                return true;
+            }
+            return false;
         });
     }
     

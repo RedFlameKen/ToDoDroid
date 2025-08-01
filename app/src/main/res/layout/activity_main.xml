@@ -18,36 +18,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/main_bottom_bar" />
 
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_bottom_bar"
+        style="@style/Base.Theme.ToDoDroid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/gruvbox_black"
+        app:itemActiveIndicatorStyle="@style/App.TodoDroid.Indicator"
+        app:itemIconTint="@color/gruvbox_white_light"
+        app:itemTextColor="@color/gruvbox_white_light"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <Button
-            android:id="@+id/main_dashboard_bottom_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="dashboard"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/main_create_bottom_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="create"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/main_profile_bottom_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="profile"
-            android:layout_weight="1" />
-
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/main_bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

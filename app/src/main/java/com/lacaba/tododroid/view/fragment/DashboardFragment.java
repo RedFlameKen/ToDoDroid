@@ -1,26 +1,30 @@
 package com.lacaba.tododroid.view.fragment;
 
-import java.util.ArrayList;
 
 import com.lacaba.tododroid.R;
-import com.lacaba.tododroid.model.Workspace;
-import com.lacaba.tododroid.view.activity.ToDoListActivity;
-import com.lacaba.tododroid.view.component.WorkspaceItem;
+import com.lacaba.tododroid.controller.todo.ToDoListController;
+import com.lacaba.tododroid.model.ResourceRepository;
+import com.lacaba.tododroid.view.adapter.ToDoListAdapter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class DashboardFragment extends Fragment {
 
-    private ArrayList<WorkspaceItem> workspaceItems;
     private LinearLayout panel;
+    private RecyclerView recycler;
+    private SwipeRefreshLayout refresher;
+
+    private ToDoListController todolistController;
 
     public DashboardFragment(){
         super(R.layout.fragment_dashboard);
-        this.workspaceItems = new ArrayList<>();
+        todolistController = new ToDoListController();
     }
 
     @Override
@@ -39,22 +43,25 @@ public class DashboardFragment extends Fragment {
                 }
             }
         }
-        panel = getActivity().findViewById(R.id.dashboard_content_panel);
 
-        for (int i = 0; i < 5; i++) {
-            Workspace ws = new Workspace.Builder()
-                .name(new StringBuilder().append("workspace ").append(i).toString())
-                .build();
-            WorkspaceItem wsItem = new WorkspaceItem(requireContext(), ws);
-            wsItem.setOnClickListener(viewx -> {
-                Intent intent = new Intent(getContext(), ToDoListActivity.class);
-                intent.putExtra("ws_name", ws.getName());
-                getActivity().startActivity(intent);
-            });
-            workspaceItems.add(wsItem);
-            panel.addView(workspaceItems.get(i));
-        }
+        // panel = getActivity().findViewById(R.id.dashboard_content_panel);
+        recycler = view.findViewById(R.id.dashboard_recyclerview);
+        refresher = view.findViewById(R.id.dashboard_refresh);
 
+        refresher.setOnRefreshListener(() -> {
+            refresher.setRefreshing(false);
+        });
+
+        loadToDoLists();
+    }
+
+    private void loadToDoLists(){
+        String userId = ResourceRepository.getInstance().getCurUser().getId();
+        todolistController.getToDoLists(userId, todolists -> {
+            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            ToDoListAdapter adapter = new ToDoListAdapter(todolists);
+            recycler.setAdapter(adapter);
+        });
     }
 
 }

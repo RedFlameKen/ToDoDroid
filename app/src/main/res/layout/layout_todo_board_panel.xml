@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_todo_board_panel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:clipToOutline="false"
+    android:background="@color/gruvbox_background">
+
+    <ScrollView
+        android:id="@+id/todoboard_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layout_margin="8dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/todoboard_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/gruvbox_black_light"
+                android:layout_gravity="center"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="false"
+                app:cardCornerRadius="14dp"
+                android:elevation="1dp"
+                android:padding="5dp" />
+
+            <LinearLayout
+                android:id="@+id/todoboard_board_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp" 
+                android:layout_gravity="center"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:orientation="vertical"
+                android:animateLayoutChanges="false"
+                android:elevation="4dp"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/todoboard_content_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:elevation="4dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/todoboard_add_todo_cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="14dp"
+                    />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </ScrollView>
+
+</FrameLayout>
+
+
