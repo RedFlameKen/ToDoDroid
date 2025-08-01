@@ -1,8 +1,8 @@
 package com.lacaba.tododroid.controller.todo;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.lacaba.tododroid.model.ResourceRepository;
 import com.lacaba.tododroid.model.todo.BoardType;
 import com.lacaba.tododroid.model.todo.ToDo;
@@ -30,9 +30,9 @@ public class ToDoListController {
         ToDoList todolist = new ToDoList.Builder()
             .name(name)
             .userId(userId)
-            .todo(new ArrayList<DocumentReference>())
-            .doing(new ArrayList<DocumentReference>())
-            .done(new ArrayList<DocumentReference>())
+            .todo(new ArrayList<String>())
+            .doing(new ArrayList<String>())
+            .done(new ArrayList<String>())
             .build();
         todolistRepository.writeToDoList(todolist, null, null);
     }
@@ -49,12 +49,21 @@ public class ToDoListController {
         todoRepository.getToDosByBoardType(todolistId, boardType, onResult);
     }
 
+    public void getToDosOrder(String todolistId, BoardType boardType, Consumer<ArrayList<String>> onResult){
+        todolistRepository.getToDoOrder(todolistId, boardType, onResult);
+    }
+
     public void updateToDo(ToDo todo){
         todoRepository.updateToDo(todo, null, null);
     }
 
-    // public ToDoBoards buildToDoBoards(ToDoList todolist){
-    // }
+    public void updateToDoList(ToDoList todolist){
+        todolist.setUpdateDate(new Date());
+        todolistRepository.updateToDoList(todolist, null, null);
+    }
 
+    public void deleteToDoFromDb(ToDo todo){
+        todoRepository.deleteToDoById(todo.getId(), null, null);
+    }
     
 }

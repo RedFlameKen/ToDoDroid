@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.firebase.firestore.DocumentId;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 import com.google.firebase.firestore.ServerTimestamp;
@@ -23,11 +22,11 @@ public class ToDoList {
     private String userId;
 
     @PropertyName("todo_todos")
-    private ArrayList<DocumentReference> todo;
+    private ArrayList<String> todo;
     @PropertyName("doing_todos")
-    private ArrayList<DocumentReference> doing;
+    private ArrayList<String> doing;
     @PropertyName("done_todos")
-    private ArrayList<DocumentReference> done;
+    private ArrayList<String> done;
 
     @PropertyName("update_date")
     @ServerTimestamp
@@ -57,15 +56,15 @@ public class ToDoList {
         return userId;
     }
 
-    public ArrayList<DocumentReference> getTodo() {
+    public ArrayList<String> getTodo() {
         return todo;
     }
 
-    public ArrayList<DocumentReference> getDoing() {
+    public ArrayList<String> getDoing() {
         return doing;
     }
 
-    public ArrayList<DocumentReference> getDone() {
+    public ArrayList<String> getDone() {
         return done;
     }
 
@@ -89,15 +88,15 @@ public class ToDoList {
         this.updateDate = updateDate;
     }
 
-    public void setTodo(ArrayList<DocumentReference> todo) {
+    public void setTodo(ArrayList<String> todo) {
         this.todo = todo;
     }
 
-    public void setDoing(ArrayList<DocumentReference> doing) {
+    public void setDoing(ArrayList<String> doing) {
         this.doing = doing;
     }
 
-    public void setDone(ArrayList<DocumentReference> done) {
+    public void setDone(ArrayList<String> done) {
         this.done = done;
     }
 
@@ -105,11 +104,10 @@ public class ToDoList {
     public Map<String, Object> getUpdateMap(){
         Map<String, Object> map = new HashMap<>();
         map.put("name", name);
-        map.put("userId", userId);
         map.put("updateDate", updateDate);
-        map.put("todoTodos", todo);
-        map.put("doingTodos", doing);
-        map.put("doneDones", done);
+        map.put("todo", todo);
+        map.put("doing", doing);
+        map.put("done", done);
         return map;
     }
 
@@ -119,9 +117,9 @@ public class ToDoList {
         private String name;
         private String userId;
         private Date updateDate;
-        private ArrayList<DocumentReference> todo;
-        private ArrayList<DocumentReference> doing;
-        private ArrayList<DocumentReference> done;
+        private ArrayList<String> todo;
+        private ArrayList<String> doing;
+        private ArrayList<String> done;
 
         public Builder(){
             id = userId = name = "";
@@ -144,17 +142,17 @@ public class ToDoList {
             return this;
         }
 
-        public Builder todo(ArrayList<DocumentReference> todo) {
+        public Builder todo(ArrayList<String> todo) {
             this.todo = todo;
             return this;
         }
 
-        public Builder doing(ArrayList<DocumentReference> doing) {
+        public Builder doing(ArrayList<String> doing) {
             this.doing = doing;
             return this;
         }
 
-        public Builder done(ArrayList<DocumentReference> done) {
+        public Builder done(ArrayList<String> done) {
             this.done = done;
             return this;
         }

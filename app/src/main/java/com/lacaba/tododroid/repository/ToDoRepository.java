@@ -2,6 +2,7 @@ package com.lacaba.tododroid.repository;
 
 import java.util.ArrayList;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.lacaba.tododroid.controller.db.event.OnWriteFailedListener;
 import com.lacaba.tododroid.controller.db.event.OnWriteSuccessListener;
@@ -20,9 +21,9 @@ public class ToDoRepository {
     }
 
     public void writeToDo(ToDo todo, OnWriteSuccessListener onSuccess, OnWriteFailedListener onFailed){
-        fstore.collection(COLLECTION_NAME)
-            .document()
-            .set(todo)
+        DocumentReference docref = fstore.collection(COLLECTION_NAME).document();
+        todo.setId(docref.getId());
+        docref.set(todo)
             .addOnSuccessListener(v -> {
                 if(onSuccess != null)
                     onSuccess.onWriteSuccess(null);

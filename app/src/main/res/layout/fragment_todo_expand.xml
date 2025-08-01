@@ -92,11 +92,12 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/todoexpand_button_panel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/todoexpand_desc_panel"/>
 

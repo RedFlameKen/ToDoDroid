@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.lacaba.tododroid.controller.db.event.OnWriteFailedListener;
 import com.lacaba.tododroid.controller.db.event.OnWriteSuccessListener;
+import com.lacaba.tododroid.model.todo.BoardType;
 import com.lacaba.tododroid.model.todo.ToDoList;
 import com.lacaba.tododroid.util.Consumer;
 
@@ -39,6 +40,16 @@ public class ToDoListRepository {
                 .addOnSuccessListener(docsnap -> {
                     onResult.accept(docsnap.toObject(ToDoList.class));
                 });
+    }
+
+    public void getToDoOrder(String todolistId, BoardType type, Consumer<ArrayList<String>> onResult){
+        fstore.collection(COLLECTION_NAME)
+            .document(todolistId)
+            .collection(type.toString().toLowerCase())
+            .get()
+            .addOnSuccessListener(docsnap -> {
+                onResult.accept(new ArrayList<>(docsnap.toObjects(String.class)));
+            });
     }
 
     public void updateToDoList(ToDoList todolist, OnWriteSuccessListener onSuccess, OnWriteFailedListener onFailed){

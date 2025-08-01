@@ -4,6 +4,7 @@ import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.ToDoListViewController;
 import com.lacaba.tododroid.model.todo.BoardType;
 import com.lacaba.tododroid.model.todo.ToDo;
+import com.lacaba.tododroid.view.component.RowButton;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
@@ -26,6 +28,7 @@ public class ExpandToDoDialog extends DialogFragment {
     private Button saveButton;
     private EditText descField;
     private EditText titleField;
+    private LinearLayout buttonPanel;
 
     public ExpandToDoDialog(ToDo todo, ToDoListViewController controller, BoardType boardType){
         this.todo = todo;
@@ -50,9 +53,9 @@ public class ExpandToDoDialog extends DialogFragment {
         descField = layout.findViewById(R.id.todoexpand_desc_field);
         descField.setText(todo.getDescription());
 
-        FrameLayout buttonPanel = layout.findViewById(R.id.todoexpand_button_panel);
+        buttonPanel = layout.findViewById(R.id.todoexpand_button_panel);
 
-        initButtonPanel(inflater, buttonPanel);
+        initButtonPanel(inflater);
 
         return layout;
     }
@@ -64,49 +67,52 @@ public class ExpandToDoDialog extends DialogFragment {
         getDialog().cancel();
     }
 
-    private void initButtonPanel(LayoutInflater inflater, FrameLayout buttonPanel){
-        View view = null;
+    private void initButtonPanel(LayoutInflater inflater){
         switch (boardType) {
             case TODO:
-                view = initTodoButtonPanel(inflater, buttonPanel);
+                initTodoButtonPanel(inflater);
                 break;
             case DOING:
-                view = initDoingButtonPanel(inflater, buttonPanel);
+                initDoingButtonPanel(inflater);
                 break;
             case DONE:
-                view = initDoneButtonPanel(inflater, buttonPanel);
+                initDoneButtonPanel(inflater);
                 break;
         }
-        buttonPanel.addView(view);
+        RowButton deleteButton = RowButton.inflate(inflater, R.drawable.delete, "Delete");
+        deleteButton.setOnClickListener(v -> {
+            deleteToDoAction();
+        });
+        buttonPanel.addView(deleteButton);
 
         setFocusLostListeners();
     }
 
-    private View initTodoButtonPanel(LayoutInflater inflater, FrameLayout buttonPanel){
-        View view = inflater.inflate(R.layout.layout_todoboard_expand_todo, null);
-        Button doingButton = view.findViewById(R.id.todoexpandtodo_move_to_doing_button);
-        Button doneButton = view.findViewById(R.id.todoexpandtodo_move_to_done_button);
+    private void initTodoButtonPanel(LayoutInflater inflater){
+        RowButton doingButton = RowButton.inflate(inflater, R.drawable.arrow_right, "Move to doing");
         doingButton.setOnClickListener(v -> migrateToDoingAction());
+        buttonPanel.addView(doingButton);
+        RowButton doneButton = RowButton.inflate(inflater, R.drawable.check_n, "Move to Done");
         doneButton.setOnClickListener(v -> migrateToDoneAction());
-        return view;
+        buttonPanel.addView(doneButton);
     }
 
-    private View initDoingButtonPanel(LayoutInflater inflater, FrameLayout buttonPanel){
-        View view = inflater.inflate(R.layout.layout_todoboard_expand_doing, null);
-        Button todoButton = view.findViewById(R.id.todoexpanddoing_move_to_todo_button);
-        Button doneButton = view.findViewById(R.id.todoexpanddoing_move_to_done_button);
+    private void initDoingButtonPanel(LayoutInflater inflater){
+        RowButton todoButton = RowButton.inflate(inflater, R.drawable.clipboard, "Move to Todo");
         todoButton.setOnClickListener(v -> migrateToToDoAction());
+        buttonPanel.addView(todoButton);
+        RowButton doneButton = RowButton.inflate(inflater, R.drawable.check_n, "Move to Done");
         doneButton.setOnClickListener(v -> migrateToDoneAction());
-        return view;
+        buttonPanel.addView(doneButton);
     }
 
-    private View initDoneButtonPanel(LayoutInflater inflater, FrameLayout buttonPanel){
-        View view = inflater.inflate(R.layout.layout_todoboard_expand_done, null);
-        Button todoButton = view.findViewById(R.id.todoexpanddone_move_to_todo_button);
-        Button doingButton = view.findViewById(R.id.todoexpanddone_move_to_doing_button);
+    private void initDoneButtonPanel(LayoutInflater inflater){
+        RowButton todoButton = RowButton.inflate(inflater, R.drawable.clipboard, "Move to Todo");
         todoButton.setOnClickListener(v -> migrateToToDoAction());
+        buttonPanel.addView(todoButton);
+        RowButton doingButton = RowButton.inflate(inflater, R.drawable.arrow_left, "Move to doing");
         doingButton.setOnClickListener(v -> migrateToDoingAction());
-        return view;
+        buttonPanel.addView(doingButton);
     }
 
     private void migrateToToDoAction(){
@@ -124,6 +130,11 @@ public class ExpandToDoDialog extends DialogFragment {
     private void migrateToDoneAction(){
         controller.migrateToDo(todo, boardType, BoardType.DONE, 0);
         controller.setTab(2);
+        getDialog().cancel();
+    }
+
+    private void deleteToDoAction(){
+        controller.deleteToDo(todo);
         getDialog().cancel();
     }
 
