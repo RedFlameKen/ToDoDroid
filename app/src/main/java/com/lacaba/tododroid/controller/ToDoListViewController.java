@@ -79,7 +79,7 @@ public class ToDoListViewController {
     }
 
     private void sortTodos(ArrayList<ToDo> todos, BoardType type){
-        todos.sort((t1, t2) -> {
+        Collections.sort(todos, (t1, t2) -> {
             int t1Index = getToDoIdOrderArray(type).indexOf(t1.getId());
             int t2Index = getToDoIdOrderArray(type).indexOf(t2.getId());
             if(t1Index < t2Index){
