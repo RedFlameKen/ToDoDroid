@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 
 public class ProfileFragment extends Fragment {
 
+    public static final String TAG = "ProfileFragment";
+
     private TextView greetLabel;
     private TextView usernameLabel;
     private TextView emailLabel;

@@ -14,6 +14,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class DashboardFragment extends Fragment {
 
+    public static final String TAG = "DashboardFragment";
+
     private LinearLayout panel;
     private RecyclerView recycler;
     private SwipeRefreshLayout refresher;
