@@ -142,6 +142,7 @@ public class ExpandToDoDialog extends DialogFragment {
     @Override
     public void onStart(){
         super.onStart();
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.slide_up_dialog;
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
