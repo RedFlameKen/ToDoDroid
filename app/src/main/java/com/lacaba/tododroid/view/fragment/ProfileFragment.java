@@ -1,7 +1,7 @@
 package com.lacaba.tododroid.view.fragment;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.auth.UserController;
@@ -58,15 +58,43 @@ public class ProfileFragment extends Fragment {
     }
 
     private String generateGreetLabelText(){
-        LocalTime time = LocalTime.now();
-        if(time.isAfter(LocalTime.of(0,0)) && time.isBefore(LocalTime.of(12,0)))
+        Date time = new Date();
+        if(time.after(new Date(getMorningTime())) && time.before(new Date(getAfternoonTime())))
             return "Good Morning,";
-        else if(time.isAfter(LocalTime.of(12,0)) && time.isBefore(LocalTime.of(17,0)))
+        else if(time.after(new Date(getAfternoonTime())) && time.before(new Date(getEveningTime())))
             return "Good Afternoon,";
-        else if(time.isAfter(LocalTime.of(17,0)) && time.isBefore(LocalTime.of(21,0)))
+        else if(time.after(new Date(getEveningTime())) && time.before(new Date(getNightTime())))
             return "Good Evening,";
         else
             return "Good Night,";
+    }
+
+    private long getMorningTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        return cal.getTimeInMillis();
+    }
+
+    private long getAfternoonTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 12);
+        cal.set(Calendar.MINUTE, 0);
+        return cal.getTimeInMillis();
+    }
+
+    private long getEveningTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 17);
+        cal.set(Calendar.MINUTE, 0);
+        return cal.getTimeInMillis();
+    }
+
+    private long getNightTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 21);
+        cal.set(Calendar.MINUTE, 0);
+        return cal.getTimeInMillis();
     }
 
     private void initLogoutButton(){
