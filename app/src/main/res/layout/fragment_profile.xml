@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textSize="14pt"
             android:layout_gravity="start"
-            android:text="Profile"
+            android:text="@string/profile_placeholder"
             android:textColor="@color/gruvbox_white_light" />
 
     </Toolbar>
@@ -60,13 +60,35 @@
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profile_greet_label"
+                        android:textSize="14sp"
+                        android:text="@string/greet_placeholder"
+                        android:textColor="@color/gruvbox_white_light"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <TextView
                         android:id="@+id/profile_username_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Username"
-                        android:textSize="14pt"
-                        android:textColor="@color/gruvbox_white_light"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/username_placeholder"
+                        android:textSize="36sp"
+                        android:textColor="@color/gruvbox_green"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/profile_greet_label"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/profile_email_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email_placeholder"
+                        android:textSize="18sp"
+                        android:textColor="@color/gruvbox_white"
+                        app:layout_constraintTop_toBottomOf="@id/profile_username_label"
                         app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -84,6 +106,7 @@
                     app:layout_constraintTop_toBottomOf="@id/profile_profile_info_panel"
                     app:layout_constraintStart_toStartOf="parent"
                     />
+
                 <LinearLayout
                     android:id="@+id/profile_buttons_panel"
                     android:layout_width="match_parent"

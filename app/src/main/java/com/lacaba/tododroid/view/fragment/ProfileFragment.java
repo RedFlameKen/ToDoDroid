@@ -1,5 +1,8 @@
 package com.lacaba.tododroid.view.fragment;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.auth.UserController;
 import com.lacaba.tododroid.model.ResourceRepository;
@@ -17,7 +20,10 @@ import androidx.fragment.app.Fragment;
 
 public class ProfileFragment extends Fragment {
 
+    private TextView greetLabel;
     private TextView usernameLabel;
+    private TextView emailLabel;
+
     private LinearLayout buttonPanel;
 
     private ResourceRepository resourceRepository;
@@ -36,14 +42,31 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
+        greetLabel = view.findViewById(R.id.profile_greet_label);
         usernameLabel = view.findViewById(R.id.profile_username_label);
+        emailLabel = view.findViewById(R.id.profile_email_label);
+
         buttonPanel = view.findViewById(R.id.profile_buttons_panel);
 
-        usernameLabel.setText(resourceRepository.getCurUser().getUsername());
+        greetLabel.setText(generateGreetLabelText());
+        usernameLabel.setText(resourceRepository.getCurFirebaseUser().getDisplayName());
+        emailLabel.setText(resourceRepository.getCurFirebaseUser().getEmail());
 
         initChangeUsernameButton();
         initSupportButton();
         initLogoutButton();
+    }
+
+    private String generateGreetLabelText(){
+        LocalTime time = LocalTime.now();
+        if(time.isAfter(LocalTime.of(0,0)) && time.isBefore(LocalTime.of(12,0)))
+            return "Good Morning,";
+        else if(time.isAfter(LocalTime.of(12,0)) && time.isBefore(LocalTime.of(17,0)))
+            return "Good Afternoon,";
+        else if(time.isAfter(LocalTime.of(17,0)) && time.isBefore(LocalTime.of(21,0)))
+            return "Good Evening,";
+        else
+            return "Good Night,";
     }
 
     private void initLogoutButton(){

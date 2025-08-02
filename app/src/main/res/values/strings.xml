@@ -21,4 +21,8 @@
     <string name="subject_text">Subject</string>
     <string name="description_text">Description</string>
     <string name="submit_text">Submit</string>
+    <string name="greet_placeholder">Good morning,</string>
+    <string name="username_placeholder">Username</string>
+    <string name="email_placeholder">funguy@mail.com</string>
+    <string name="profile_placeholder">Profile</string>
 </resources>
