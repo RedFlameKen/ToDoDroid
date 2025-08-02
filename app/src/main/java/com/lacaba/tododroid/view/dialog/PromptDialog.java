@@ -19,6 +19,7 @@ public class PromptDialog extends DialogFragment {
 
     private String headerText;
     private String hintText;
+    private String inputText;
     private String okText;
 
     private TextView headerLabel;
@@ -32,6 +33,7 @@ public class PromptDialog extends DialogFragment {
     private PromptDialog(Builder builder){
         headerText = builder.headerText;
         hintText = builder.hintText;
+        inputText = builder.inputText;
         okText = builder.okText;
         onOkListener = builder.onOkListener;
     }
@@ -44,6 +46,7 @@ public class PromptDialog extends DialogFragment {
 
         inputField = layout.findViewById(R.id.promptdialog_input_field);
         inputField.setHint(hintText);
+        inputField.setText(inputText);
 
         okButton = layout.findViewById(R.id.promptdialog_submit_button);
         okButton.setText(okText);
@@ -76,6 +79,7 @@ public class PromptDialog extends DialogFragment {
 
         private String headerText;
         private String hintText;
+        private String inputText;
         private String okText;
 
         private OnOkListener onOkListener;
@@ -83,7 +87,7 @@ public class PromptDialog extends DialogFragment {
         public Builder(){
             headerText="Input";
             okText = "OK";
-            hintText = "";
+            inputText = hintText = "";
             onOkListener = null;
         }
 
@@ -104,6 +108,11 @@ public class PromptDialog extends DialogFragment {
 
         public Builder setOnOkListener(OnOkListener onOkListener) {
             this.onOkListener = onOkListener;
+            return this;
+        }
+
+        public Builder setInputText(String inputText) {
+            this.inputText = inputText;
             return this;
         }
 

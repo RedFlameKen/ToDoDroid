@@ -25,4 +25,5 @@
     <string name="username_placeholder">Username</string>
     <string name="email_placeholder">funguy@mail.com</string>
     <string name="profile_placeholder">Profile</string>
+    <string name="rename_text">Rename</string>
 </resources>

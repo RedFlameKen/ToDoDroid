@@ -2,6 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ToDoDroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <item name="colorPrimary">@color/gruvbox_black</item>
+    <item name="colorControlHighlight">@color/gruvbox_blue_light</item>
     </style>
+
+    <style name="App.TodoDroid.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+    <item name="android:color">@color/gruvbox_green_light</item>
+    </style>
+
+    <style name="Theme.ToDoDroid" parent="Base.Theme.ToDoDroid" />
 </resources>

@@ -30,6 +30,13 @@ public class DashboardController {
         todolistController.writeToDoListToDb(todolist);
     }
 
+    public void renameToDoList(ToDoList todolist, String newname){
+        int index = todolists.indexOf(todolist);
+        todolist.setName(newname);
+        todolistAdapter.notifyItemChanged(index);
+        todolistController.updateToDoList(todolist);
+    }
+
     public void deleteToDoList(ToDoList todolist){
         int index = removeToDoList(todolist);
         todolistAdapter.notifyItemRemoved(index);

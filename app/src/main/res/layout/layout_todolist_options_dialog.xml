@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/layout_todolist_options_dialog"
-    >
+    android:background="@color/gruvbox_background" >
 
     <TextView
         android:id="@+id/todolistoption_header"
@@ -19,12 +19,22 @@
         />
 
     <Button
+        android:id="@+id/todolistoption_rename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gruvbox_black"
+        android:foreground="?attr/selectableItemBackground"
+        android:textColor="@color/gruvbox_white_light"
+        android:text="@string/rename_text"
+        />
+
+    <Button
         android:id="@+id/todolistoption_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/gruvbox_black"
         android:foreground="?attr/selectableItemBackground"
         android:textColor="@color/gruvbox_red_light"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/delete_text"
         />
 
