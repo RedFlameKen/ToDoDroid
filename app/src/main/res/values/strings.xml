@@ -10,8 +10,10 @@
     <string name="create_todolist_label">Create ToDoList</string>
     <string name="create_todolist_hint">ToDoList name</string>
     <string name="header_placeholder">Header placeholder</string>
+    <string name="hint_placeholder">Hint placeholder</string>
     <string name="title_hint">ToDo Title</string>
     <string name="create_submit_text">Create</string>
+    <string name="ok_text">OK</string>
     <string name="cancel_text">Cancel</string>
     <string name="save_text">Save</string>
     <string name="delete_text">Delete</string>

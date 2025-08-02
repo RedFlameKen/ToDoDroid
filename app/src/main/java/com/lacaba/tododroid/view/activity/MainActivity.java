@@ -7,6 +7,7 @@ import com.lacaba.tododroid.controller.auth.UserController;
 import com.lacaba.tododroid.controller.todo.ToDoListController;
 import com.lacaba.tododroid.model.ResourceRepository;
 import com.lacaba.tododroid.view.dialog.CreateToDoListDialog;
+import com.lacaba.tododroid.view.dialog.PromptDialog;
 import com.lacaba.tododroid.view.fragment.DashboardFragment;
 import com.lacaba.tododroid.view.fragment.ProfileFragment;
 
@@ -78,8 +79,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             if(item.getItemId() == R.id.main_action_create){
-                CreateToDoListDialog dialog = new CreateToDoListDialog();
-                dialog.setOnToDoListCreateListener(name -> dashboardController.addToDoList(name));
+                PromptDialog dialog = new PromptDialog.Builder()
+                    .setOkText("Create")
+                    .setHintText("ToDoList name")
+                    .setHeaderText("Create ToDoList")
+                    .setOnOkListener(text -> dashboardController.addToDoList(text))
+                    .build();
                 dialog.show(getSupportFragmentManager(), CreateToDoListDialog.TAG);
                 return false;
             }

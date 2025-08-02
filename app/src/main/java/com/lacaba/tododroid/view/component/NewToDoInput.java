@@ -1,6 +1,7 @@
 package com.lacaba.tododroid.view.component;
 
 import com.lacaba.tododroid.R;
+import com.lacaba.tododroid.view.event.OnOkListener;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -60,11 +61,6 @@ public class NewToDoInput extends FrameLayout {
     public static NewToDoInput inflate(LayoutInflater inflater){
         NewToDoInput layout = (NewToDoInput) inflater.inflate(R.layout.layout_todo_input, null, false);
         return layout;
-    }
-
-    @FunctionalInterface
-    public static interface OnOkListener {
-        public void onOk(String text);
     }
 
 }

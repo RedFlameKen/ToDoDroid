@@ -5,6 +5,8 @@ import com.lacaba.tododroid.controller.auth.UserController;
 import com.lacaba.tododroid.model.ResourceRepository;
 import com.lacaba.tododroid.view.activity.ContactSupportActivity;
 import com.lacaba.tododroid.view.component.RowButton;
+import com.lacaba.tododroid.view.dialog.ConfirmDialog;
+import com.lacaba.tododroid.view.dialog.PromptDialog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class ProfileFragment extends Fragment {
 
         usernameLabel.setText(resourceRepository.getCurUser().getUsername());
 
+        initChangeUsernameButton();
         initSupportButton();
         initLogoutButton();
     }
@@ -62,6 +65,36 @@ public class ProfileFragment extends Fragment {
         });
 
         buttonPanel.addView(supportButton);
+    }
+
+    private void initChangeUsernameButton(){
+        RowButton changeUsernameButton = RowButton.inflate(getLayoutInflater(), R.drawable.edit, "Change Username");
+
+        changeUsernameButton.setOnClickListener(view -> {
+            PromptDialog dialog = new PromptDialog.Builder()
+                .setOkText("Change")
+                .setHintText("New username")
+                .setHeaderText("Change username")
+                .setOnOkListener(text -> confirmUsernameChange(text))
+                .build();
+            dialog.show(getParentFragmentManager(), PromptDialog.TAG);
+        });
+
+        buttonPanel.addView(changeUsernameButton);
+    }
+
+    private void confirmUsernameChange(String username){
+        ConfirmDialog dialog = new ConfirmDialog.Builder()
+            .setMessageText(String.format("Are you sure you want to change your username to \"%s\"?", username))
+            .setOnOkListener(() -> changeUsernameAction(username))
+            .build();
+        dialog.show(getParentFragmentManager(), ConfirmDialog.TAG);
+    }
+
+    private void changeUsernameAction(String username){
+        userController.updateUsername(username, () -> {
+            usernameLabel.setText(username);
+        });
     }
     
 }

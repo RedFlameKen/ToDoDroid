@@ -102,16 +102,18 @@ public class UserController {
         }
     }
 
-    public void updateUsername(String username){
+    public void updateUsername(String username, Runnable onSuccess){
         UserProfileChangeRequest request  = new UserProfileChangeRequest.Builder()
-            .setDisplayName("User").build();
-        FirebaseUser user = mAuth.getCurrentUser();
-        user.updateProfile(request)
+            .setDisplayName(username).build();
+        FirebaseUser fUser = mAuth.getCurrentUser();
+        fUser.updateProfile(request)
             .addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
-                    if(onAuthSuccessListener != null){
-                        onAuthSuccessListener.onAuthSuccess(user);
-                    }
+                    User user = resourceRepository.getCurUser();
+                    user.setUsername(username);
+                    userRepository.updateUser(user, null, null);
+                    if(onSuccess != null)
+                        onSuccess.run();
                 } else {
                     if(onAuthFailedListener != null){
                         onAuthFailedListener.onAuthFailed(task.getException());
