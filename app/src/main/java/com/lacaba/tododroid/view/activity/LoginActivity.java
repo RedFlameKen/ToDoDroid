@@ -33,14 +33,6 @@ public class LoginActivity extends AppCompatActivity {
         setListeners();
     }
 
-    @Override
-    public void onStart(){
-        super.onStart();
-        if(userController.isUserLoggedIn()){
-            reload();
-        }
-    }
-
     private void initComponents(){
         emailField = findViewById(R.id.login_email_field);
 
@@ -54,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
 
-        userController.login(email, password);
+        userController.login(email, password, () -> reload());
     }
 
     private void reload(){
@@ -71,9 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         });
         toSignupButton.setOnClickListener(view -> {
             startActivity(new Intent(this, SignupActivity.class));
-        });
-        userController.setOnAuthSuccessListener(user -> {
-            reload();
         });
         userController.setOnAuthFailedListener(e -> {
             new AlertDialog.Builder(this)

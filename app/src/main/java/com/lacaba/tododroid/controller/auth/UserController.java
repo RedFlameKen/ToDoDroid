@@ -38,14 +38,14 @@ public class UserController {
         userRepository.findUserById(fUser.getUid(), onResult);
     }
 
-    public void login(String email, String password){
+    public void login(String email, String password, Runnable onSuccess){
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity, task -> {
                 if(task.isSuccessful()){
                     FirebaseUser fUser = mAuth.getCurrentUser();
                     resourceRepository.setCurFirebaseUser(fUser);
-                    if(onAuthSuccessListener != null){
-                        onAuthSuccessListener.onAuthSuccess(fUser);
+                    if(onSuccess != null){
+                        onSuccess.run();
                     }
                 } else {
                     if(onAuthFailedListener != null){
