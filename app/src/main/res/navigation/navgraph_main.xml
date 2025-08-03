@@ -1,0 +1,30 @@
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navgraph_main"
+    app:startDestination="@id/main_action_home"
+    >
+
+    <fragment
+        android:id="@+id/main_action_home"
+        android:name="com.lacaba.tododroid.view.fragment.DashboardFragment"
+        android:label="homepage"
+        >
+        <action
+            android:id="@+id/mainnav_dashboard_action"
+            app:destination="@id/main_action_profile" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/main_action_profile"
+        android:name="com.lacaba.tododroid.view.fragment.ProfileFragment"
+        android:label="profile" >
+
+        <action
+            android:id="@+id/mainnav_profile_action"
+            app:destination="@id/main_action_home" />
+
+    </fragment>
+
+</navigation>

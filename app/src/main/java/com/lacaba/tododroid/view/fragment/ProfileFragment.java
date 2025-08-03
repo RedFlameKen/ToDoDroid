@@ -31,10 +31,9 @@ public class ProfileFragment extends Fragment {
     private ResourceRepository resourceRepository;
     private UserController userController;
 
-    public ProfileFragment(UserController userController){
+    public ProfileFragment(){
         super(R.layout.fragment_profile);
         resourceRepository = ResourceRepository.getInstance();
-        this.userController = userController;
     }
 
     @Override
@@ -44,6 +43,8 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
+        userController = new UserController(requireActivity());
+
         greetLabel = view.findViewById(R.id.profile_greet_label);
         usernameLabel = view.findViewById(R.id.profile_username_label);
         emailLabel = view.findViewById(R.id.profile_email_label);

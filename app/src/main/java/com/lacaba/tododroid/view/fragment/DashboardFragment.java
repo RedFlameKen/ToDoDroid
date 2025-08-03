@@ -1,8 +1,11 @@
 package com.lacaba.tododroid.view.fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lacaba.tododroid.R;
 import com.lacaba.tododroid.controller.DashboardController;
 import com.lacaba.tododroid.view.adapter.ToDoListAdapter;
+import com.lacaba.tododroid.view.dialog.CreateToDoListDialog;
+import com.lacaba.tododroid.view.dialog.PromptDialog;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,14 +22,13 @@ public class DashboardFragment extends Fragment {
     private LinearLayout panel;
     private RecyclerView recycler;
     private SwipeRefreshLayout refresher;
+    private FloatingActionButton addButton;
 
     private DashboardController dashboardController;
 
-    public DashboardFragment(DashboardController dashboardController){
+    public DashboardFragment(){
         super(R.layout.fragment_dashboard);
-        this.dashboardController = dashboardController;
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
@@ -38,24 +40,42 @@ public class DashboardFragment extends Fragment {
             }
         }
 
+        addButton = view.findViewById(R.id.dashboard_add_button);
+        addButton.setOnClickListener(v -> {
+            showCreateToDoListDialog();
+        });
+
         recycler = view.findViewById(R.id.dashboard_recyclerview);
         refresher = view.findViewById(R.id.dashboard_refresh);
+
+        dashboardController = DashboardController.getInstance();
 
         refresher.setOnRefreshListener(() -> {
             dashboardController.reloadToDoLists(() -> refresher.setRefreshing(false));
         });
 
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        ToDoListAdapter adapter = new ToDoListAdapter(dashboardController, getParentFragmentManager());
 
-        dashboardController.setTodolistAdapter(adapter);
-        recycler.setAdapter(adapter);
+        dashboardController.loadToDoList(controller -> {
+            controller.setTodolistAdapter(new ToDoListAdapter(controller, getParentFragmentManager()));
+            recycler.setAdapter(controller.getTodolistAdapter());
+        });
     }
 
     @Override
     public void onResume(){
         super.onResume();
         dashboardController.reloadToDoLists(null);
+    }
+
+    private void showCreateToDoListDialog(){
+        PromptDialog dialog = new PromptDialog.Builder()
+            .setOkText("Create")
+            .setHintText("ToDoList name")
+            .setHeaderText("Create ToDoList")
+            .setOnOkListener(text -> dashboardController.addToDoList(text))
+            .build();
+        dialog.show(getParentFragmentManager(), CreateToDoListDialog.TAG);
     }
 
 }
