@@ -31,19 +31,31 @@ public class ProfileFragment extends Fragment {
     private ResourceRepository resourceRepository;
     private UserController userController;
 
+    private String username;
+    private String email;
+
     public ProfileFragment(){
         super(R.layout.fragment_profile);
-        resourceRepository = ResourceRepository.getInstance();
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        if(args != null && args.containsKey("username"))
+            username = args.getString("username");
+        if(args != null && args.containsKey("email"))
+            email = args.getString("email");
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         userController = new UserController(requireActivity());
+
+        resourceRepository = ResourceRepository.getInstance();
 
         greetLabel = view.findViewById(R.id.profile_greet_label);
         usernameLabel = view.findViewById(R.id.profile_username_label);
@@ -52,8 +64,8 @@ public class ProfileFragment extends Fragment {
         buttonPanel = view.findViewById(R.id.profile_buttons_panel);
 
         greetLabel.setText(generateGreetLabelText());
-        usernameLabel.setText(resourceRepository.getCurFirebaseUser().getDisplayName());
-        emailLabel.setText(resourceRepository.getCurFirebaseUser().getEmail());
+        usernameLabel.setText(username);
+        emailLabel.setText(email);
 
         initChangeUsernameButton();
         initSupportButton();
@@ -147,6 +159,7 @@ public class ProfileFragment extends Fragment {
 
     private void changeUsernameAction(String username){
         userController.updateUsername(username, () -> {
+            this.username = username;
             usernameLabel.setText(username);
         });
     }
