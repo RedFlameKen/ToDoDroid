@@ -9,6 +9,7 @@ import com.lacaba.tododroid.model.todo.BoardType;
 import com.lacaba.tododroid.view.adapter.ToDoBoardAdapter;
 import com.lacaba.tododroid.view.fragment.TodoBoardFragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,8 @@ public class ToDoListActivity extends AppCompatActivity {
         if((todolistId = getIntent().getStringExtra("todolist_id")) != null){
             todoListController.findToDoListById(todolistId, todolist -> {
                 assert todolist != null : "todolist should not be null if todolistId does exist";
-                controller = new ToDoListViewController(todolist, tabs);
+                controller = ToDoListViewController.getInstance();
+                controller.initController(todolist, tabs);
                 initToDoBoardAdapter(BoardType.TODO);
                 initToDoBoardAdapter(BoardType.DOING);
                 initToDoBoardAdapter(BoardType.DONE);
@@ -60,6 +62,13 @@ public class ToDoListActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration config){
+        super.onConfigurationChanged(config);
+
+        controller.notifyAdapterState();
     }
 
     private void initToDoBoardAdapter(BoardType type){
@@ -98,19 +107,20 @@ public class ToDoListActivity extends AppCompatActivity {
         @Override
         public Fragment createFragment(int position){
             TodoBoardFragment frag = null;
-            BoardType type = null;
+            Bundle args = new Bundle();
             switch (position) {
                 case 0:
-                    type = BoardType.TODO;
+                    args.putString("board_type", BoardType.TODO.toString());
                     break;
                 case 1:
-                    type = BoardType.DOING;
+                    args.putString("board_type", BoardType.DOING.toString());
                     break;
                 case 2:
-                    type = BoardType.DONE;
+                    args.putString("board_type", BoardType.DONE.toString());
                     break;
             }
-            frag = new TodoBoardFragment(controller, type);
+            frag = new TodoBoardFragment();
+            frag.setArguments(args);
             return frag;
         }
 

@@ -11,6 +11,7 @@ import com.lacaba.tododroid.model.user.User;
 import com.lacaba.tododroid.view.fragment.DashboardFragment;
 import com.lacaba.tododroid.view.fragment.ProfileFragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -50,6 +51,22 @@ public class MainActivity extends AppCompatActivity {
         addListeners();
 
         addFrags();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration config){
+        super.onConfigurationChanged(config);
+
+        if(bottomNav.getSelectedItemId() == R.id.main_action_home){
+            showDashboard();
+            fragMan.clearBackStack(null);
+        }
+
+        if(bottomNav.getSelectedItemId() == R.id.main_action_profile){
+            fragMan.popBackStack();
+            showProfile();
+        }
+
     }
 
     private void addFrags(){

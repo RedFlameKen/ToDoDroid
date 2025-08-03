@@ -30,9 +30,8 @@ public class TodoBoardFragment extends Fragment {
     private RowButton addTodoButton;
     private LinearLayout boardPanel;
 
-    public TodoBoardFragment(ToDoListViewController controller, BoardType boardType){
-        this.controller = controller;
-        this.boardType = boardType;
+    public TodoBoardFragment(){
+        super(R.layout.fragment_todoboard);
     }
 
     private ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
@@ -58,6 +57,11 @@ public class TodoBoardFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         FrameLayout layout = (FrameLayout) inflater.inflate(R.layout.layout_todo_board_panel, container, false);
+
+        controller = ToDoListViewController.getInstance();
+        Bundle args = getArguments();
+        if(args != null && args.containsKey("board_type"))
+            boardType = BoardType.valueOf(args.getString("board_type"));
 
         recycler = layout.findViewById(R.id.todoboard_content_panel);
         boardPanel = layout.findViewById(R.id.todoboard_board_panel);

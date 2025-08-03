@@ -22,7 +22,18 @@ public class ToDoListViewController {
 
     private TabLayout tabs;
 
-    public ToDoListViewController(ToDoList todolist, TabLayout tabs){
+    public static ToDoListViewController INSTANCE;
+
+    private ToDoListViewController(){}
+
+    public static ToDoListViewController getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new ToDoListViewController();
+        }
+        return INSTANCE;
+    }
+
+    public void initController(ToDoList todolist, TabLayout tabs){
         this.todolist = todolist;
         this.tabs = tabs;
         todolistController = new ToDoListController();
@@ -196,6 +207,12 @@ public class ToDoListViewController {
                 addToDoAction(boards.getDones(), todo);
                 break;
         }
+    }
+
+    public void notifyAdapterState(){
+        getBoardAdapter(BoardType.TODO).notifyDataSetChanged();
+        getBoardAdapter(BoardType.DOING).notifyDataSetChanged();
+        getBoardAdapter(BoardType.DONE).notifyDataSetChanged();
     }
 
     private void addToDoAction(ArrayList<ToDo> todos, ToDo todo){

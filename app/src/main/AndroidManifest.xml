@@ -56,10 +56,12 @@
 
         <activity
             android:name=".view.activity.ToDoListActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
 
         <activity
             android:name=".view.activity.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true" />
 
     </application>
