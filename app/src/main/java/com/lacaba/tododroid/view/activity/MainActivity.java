@@ -8,6 +8,7 @@ import com.lacaba.tododroid.view.fragment.ProfileFragment;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initComponents();
-
     }
 
     private void initComponents() {
@@ -37,38 +37,69 @@ public class MainActivity extends AppCompatActivity {
         dashboardFrag = new DashboardFragment();
         profileFrag = new ProfileFragment();
 
-        showDashboard();
-
         addListeners();
 
+        addFrags();
+    }
+
+    private void addFrags(){
+        fragMan.beginTransaction()
+            .add(R.id.main_content_panel, dashboardFrag, null)
+            .add(R.id.main_content_panel, profileFrag, null)
+            .hide(profileFrag)
+            .commit();
     }
 
     private void showDashboard(){
-        fragMan.popBackStack();
         fragMan.beginTransaction()
-            .replace(R.id.main_content_panel, dashboardFrag, DashboardFragment.TAG)
-            .setReorderingAllowed(true)
+            .setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_left
+            )
+            .hide(profileFrag)
+            .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_right,
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_left
+            )
+            .show(dashboardFrag)
             .commit();
     }
     
     private void showProfile(){
         fragMan.beginTransaction()
-            .replace(R.id.main_content_panel, profileFrag, ProfileFragment.TAG)
-            .setReorderingAllowed(true)
-            .addToBackStack("main")
+            .setCustomAnimations(
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_right,
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_right
+            )
+            .hide(dashboardFrag)
+            .setCustomAnimations(
+                    R.anim.slide_in_left,
+                    R.anim.slide_out_left,
+                    R.anim.slide_in_right,
+                    R.anim.slide_out_right
+            )
+            .show(profileFrag)
+            .addToBackStack(null)
             .commit();
     }
 
 
     private void addListeners(){
         fragMan.addOnBackStackChangedListener(() -> {
-            if(fragMan.findFragmentByTag(DashboardFragment.TAG) != null && dashboardFrag.isVisible()){
+            if(fragMan.getBackStackEntryCount() == 0){
                 bottomNav.setSelectedItemId(R.id.main_action_home);
             }
         });
         bottomNav.setOnItemSelectedListener(item -> {
             if(item.getItemId() == R.id.main_action_home){
                 showDashboard();
+                fragMan.popBackStack();
                 return true;
             }
             if(item.getItemId() == R.id.main_action_profile){
