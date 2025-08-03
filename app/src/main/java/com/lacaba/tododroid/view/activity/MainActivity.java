@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +35,24 @@ public class MainActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
         bottomNav = findViewById(R.id.main_bottom_bar);
 
-        NavigationUI.setupWithNavController(bottomNav, navController);
+        // NavigationUI.setupWithNavController(bottomNav, navController);
+        addListeners();
+    }
+
+    private void addListeners(){
+        bottomNav.setOnItemSelectedListener(item -> {
+            if(bottomNav.getSelectedItemId() == item.getItemId())
+                return false;
+            if(item.getItemId() == R.id.main_action_home){
+                navController.navigate(R.id.mainnav_profile_action);
+                return true;
+            }
+            if(item.getItemId() == R.id.main_action_profile){
+                navController.navigate(R.id.mainnav_dashboard_action);
+                return true;
+            }
+            return false;
+        });
     }
 
 }
