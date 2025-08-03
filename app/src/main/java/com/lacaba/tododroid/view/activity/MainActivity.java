@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNav.setOnItemSelectedListener(item -> {
+            if(bottomNav.getSelectedItemId() == item.getItemId())
+                return false;
             if(item.getItemId() == R.id.main_action_home){
                 showDashboard();
                 fragMan.popBackStack();
